@@ -3,7 +3,6 @@ package org.owntracks.android.testutils
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
-import android.os.Build
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
@@ -90,24 +89,21 @@ inline fun IdlingResource?.with(timeoutSeconds: Long = 30, block: () -> Unit) {
 
 
 fun disableDeviceLocation() {
-    val cmd = if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-        "settings put secure location_mode 0"
-    else
-        "settings put secure location_providers_allowed -gps"
-
-    InstrumentationRegistry.getInstrumentation().uiAutomation
-        .executeShellCommand(cmd)
-        .close()
-
+    listOf("settings put secure location_mode 0",
+        "settings put secure location_providers_allowed -gps",
+        "settings put secure location_providers_allowed -network").forEach {
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand(it)
+            .close()
+    }
 }
 
 fun enableDeviceLocation() {
-    val cmd = if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.O)
-        "settings put secure location_mode 3"
-    else
-        "settings put secure location_providers_allowed +gps"
-
-    InstrumentationRegistry.getInstrumentation().uiAutomation
-        .executeShellCommand(cmd)
-        .close()
+    listOf("settings put secure location_mode 3",
+        "settings put secure location_providers_allowed +gps",
+        "settings put secure location_providers_allowed +network").forEach {
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .executeShellCommand(it)
+            .close()
+    }
 }

@@ -9,6 +9,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertNotExist
 import com.adevinta.android.barista.interaction.BaristaDialogInteractions.clickDialogNegativeButton
+import com.adevinta.android.barista.interaction.BaristaSleepInteractions.sleep
 import com.adevinta.android.barista.interaction.PermissionGranter
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,6 +38,7 @@ class OSSMapActivityTests : TestWithAnActivity<MapActivity>(MapActivity::class.j
             setNotFirstStartPreferences()
             launchActivity()
             PermissionGranter.allowPermissionsIfNeeded(Manifest.permission.ACCESS_FINE_LOCATION)
+            sleep(1000)
             assertDisplayed(R.string.deviceLocationDisabledDialogTitle)
             clickDialogNegativeButton()
             assertDisplayed(R.id.osm_map_view)

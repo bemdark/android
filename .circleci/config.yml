@@ -126,7 +126,12 @@ jobs:
           restore-gradle-cache-post-emulator-launch: false
           run-tests-working-directory: ./project
           post-emulator-wait-steps:
-            - run: adb shell settings put secure location_providers_allowed +gps && adb shell settings put secure location_providers_allowed +network && adb shell settings put secure location_mode 3 && adb shell settings put global heads_up_notifications_enabled 0 && adb root && sleep 5 && adb shell setprop ctl.restart zygote
+            - run: 
+                name: enable location on device
+                command: adb shell settings put secure location_providers_allowed +gps && adb shell settings put secure location_providers_allowed +network && adb shell settings put secure location_mode 3 && adb shell settings put global heads_up_notifications_enabled 0
+            - run:
+                name: Restart zygote process 
+                command: adb root && sleep 5 && adb shell setprop ctl.restart zygote
             - run:
                 background: true
                 command: |
@@ -176,7 +181,12 @@ jobs:
           restore-gradle-cache-post-emulator-launch: false
           run-tests-working-directory: ./project
           post-emulator-wait-steps:
-            - run: adb shell settings put secure location_providers_allowed +gps && adb shell settings put secure location_providers_allowed +network && adb shell settings put secure location_mode 3 && adb shell settings put global heads_up_notifications_enabled 0 && adb root && sleep 5 && adb shell setprop ctl.restart zygote
+            - run: 
+                name: enable location on device
+                command: adb shell settings put secure location_providers_allowed +gps && adb shell settings put secure location_providers_allowed +network && adb shell settings put secure location_mode 3 && adb shell settings put global heads_up_notifications_enabled 0
+            - run:
+                name: Restart zygote process 
+                command: adb root && sleep 5 && adb shell setprop ctl.restart zygote
             - run:
                 background: true
                 command: |
